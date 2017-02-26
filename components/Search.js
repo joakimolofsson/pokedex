@@ -17,13 +17,12 @@ class Search extends Component {
         const pokeData = JSON.parse(pokeReq.responseText);//från string till json
         console.log(pokeData)//kolla data
 
-        for(let i = 0; i < 5; i++) {
-          let j = i + 1;//plusar på med 1 för att få rätt id till pokemon
+        for(let i = 0; i < 20; i++) {
           this.setState({
-            pokemons: this.state.pokemons.concat(//pushar namn och nummer till names[]
+            pokemons: this.state.pokemons.concat(//pushar namn och nummer till pokemons[]
               {
-                name:pokeData.results[i].name,//namn på pokemon
-                url: `http://pokeapi.co/api/v2/pokemon/${j}/`//detta nummer ska användas till rätt pokemon api adress
+                name: pokeData.results[i].name,//namn på pokemon
+                url: pokeData.results[i].url//api adress till pokemon för att få ut mer data
               }
             )
           });
@@ -58,7 +57,7 @@ class Search extends Component {
         <br/>
         <ul>
           {this.state.pokemons.map((pokemon, index) => {
-            return <li onClick={this.sendPokeData.bind(this, pokemon)} key={index}>{pokemon.name + pokemon.url}</li>
+            return <li onClick={this.sendPokeData.bind(this, pokemon)} key={index}>{pokemon.name}</li>
           })}
         </ul>
       </div>

@@ -1,4 +1,4 @@
-.Imageview {
+.Statsview {
   background: #B0C4DE;
   display: inline-block;
   min-width: 230px;
@@ -8,9 +8,5 @@
   border-right: 5px solid #8A8A8A;
   border-bottom: 5px solid #CCCCCC;
   border-radius: 5px;
-  margin-right: 7px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  margin-left: 7px;
 }

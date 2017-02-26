@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Imageview from './components/Imageview';
+import Statsview from './components/Statsview';
 import Search from './components/Search';
 
 class App extends Component {
@@ -38,7 +39,13 @@ class App extends Component {
         <button onClick={this.appState.bind(this)}>AppState</button>
         <h2>{this.state.title}</h2>
         <br/>
-        <Imageview pokemonUrl={this.state.addedPokemon.url} pokemonName={this.state.addedPokemon.name}/>
+        <div className="display">
+          <div className="viewBackground">
+            <Imageview pokemonUrl={this.state.addedPokemon.url} pokemonName={this.state.addedPokemon.name}/>
+            <Statsview />
+          </div>
+        </div>
+        <br/>
         <br/>
         <Search addPokemon={this.addPokemon.bind(this)}/>
         <br/>

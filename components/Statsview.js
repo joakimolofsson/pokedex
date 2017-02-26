@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './css/Imageview.css';
+import './css/Statsview.css';
 
 class Imageview extends Component {
   constructor(props) {
@@ -9,18 +9,16 @@ class Imageview extends Component {
 
   componentWillReceiveProps(nextProps) {//uppdaterar när man har valt en pokemon
     this.setState({
-      name: nextProps.pokemonName,
-      url: nextProps.pokemonUrl
     })
   }
 
-  imageState() {//loggar state
+  Statsview() {//loggar state
     console.log(this.state)
   }
 
   render() {
     return (
-      <div className="Imageview">
+      <div className="Statsview">
         <img src={this.state.url} alt="Pokemon"/>
         <h3>{this.state.name}</h3>
       </div>
