@@ -5,6 +5,7 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loadingPlaceHolder: '',
       value: 'Pokemon',
       pokemons: []//pokemon names and urls
     }
@@ -12,12 +13,21 @@ class Search extends Component {
 
   componentWillMount() {
       const pokeReq = new XMLHttpRequest();
-      pokeReq.open('GET', 'http://pokeapi.co/api/v2/pokemon/');//adress
-      pokeReq.onload = () => {
+      pokeReq.open('GET', 'http://pokeapi.co/api/v2/pokemon/?limit=100');//adress
+      pokeReq.addEventListener('loadstart', () => {//laddnings text
+        this.setState({
+          loadingPlaceHolder: 'Loading Search Please Wait'
+        })
+      });
+      pokeReq.addEventListener('load', () => {
         const pokeData = JSON.parse(pokeReq.responseText);//från string till json
-        console.log(pokeData)//kolla data
+        //console.log(pokeData)//kolla data
 
-        for(let i = 0; i < 20; i++) {
+        this.setState({
+          loadingPlaceHolder: 'Pokemon Search'
+        })
+
+        for(let i = 0; i < 100; i++) {
           this.setState({
             pokemons: this.state.pokemons.concat(//pushar namn och nummer till pokemons[]
               {
@@ -27,10 +37,9 @@ class Search extends Component {
             )
           });
         }
-
-      }
+      });//load
       pokeReq.send();
-  }
+  }//componentWillMount
 
   onInput(e) {//two-way data bind shit, only for effect
     this.setState({
@@ -49,9 +58,7 @@ class Search extends Component {
   render() {
     return (
       <div className="Search">
-        <h3>Pokemon Search</h3>
-        <p>{this.state.value}</p>
-        <input type="text" placeholder="Search for a Pokemon" onChange={this.onInput.bind(this)}/>
+        <input className='searchInput' type="text" placeholder={this.state.loadingPlaceHolder} onChange={this.onInput.bind(this)}/>
         <br/>
         <button onClick={this.searchState.bind(this)}>SearchState</button>
         <br/>

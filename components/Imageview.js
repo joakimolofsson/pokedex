@@ -9,8 +9,8 @@ class Imageview extends Component {
 
   componentWillReceiveProps(nextProps) {//uppdaterar när man har valt en pokemon
     this.setState({
-      name: nextProps.pokemonName,
-      url: nextProps.pokemonUrl
+      imgName: nextProps.pokemonImage.imgName,
+      imgUrl: nextProps.pokemonImage.imgUrl
     })
   }
 
@@ -21,8 +21,8 @@ class Imageview extends Component {
   render() {
     return (
       <div className="Imageview">
-        <img src={this.state.url} alt="Pokemon"/>
-        <h3>{this.state.name}</h3>
+        <img src={this.state.imgUrl} alt="Pokemon"/>
+        <h3>{this.state.imgName}</h3>
       </div>
     );
   }

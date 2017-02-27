@@ -1,3 +1,8 @@
 .Search ul {
   list-style: none;
 }
+
+.Search .searchInput {
+  width: 300px;
+  font-size: 18px;
+}
