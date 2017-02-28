@@ -24,32 +24,20 @@ class App extends Component {
     }
   }
 
-  appState() {//kollar state
-    console.log(this.state)
-  }
-
   addPokemon(pokemonUrl, pokemonName) {//data från Search.js
+    const boxCover = document.querySelectorAll('.boxCover'),//loading divs
+          loadText = document.querySelectorAll('.boxCover h3');//loading divs text
+
     const pokeReq = new XMLHttpRequest();
     pokeReq.open('GET', pokemonUrl);//adress till vald pokemon
-    pokeReq.addEventListener('loadstart', () => {//laddnings text
-      this.setState({//Loading loading
-        imgName: 'Loading...',
-        imgUrl: '',
-        statsName: 'Loading...',
-        statsHeight: 'Loading...',
-        statsWeight: 'Loading...',
-        statsBaseExp: 'Loading...',
-        statsTypes: ['Loading...'],
-        statsStats: ['Loading...'],
-        statsMoves: ['Loading...'],
-        statsEvoFrom: 'Loading...',
-        statsHabitat: 'Loading...',
-        statsDescription: 'Loading...',
-      })
+    pokeReq.addEventListener('loadstart', () => {//loading func
+      for(let i = 0; i < boxCover.length; i++) {
+        boxCover[i].style.display = 'flex';//visar loading divs
+        loadText[i].style.color = 'black';
+      }
     });//loadstart
     pokeReq.addEventListener('load', () => {
       const pokeData = JSON.parse(pokeReq.responseText);//Pokemon default data
-      //console.log(pokeData)
 
       this.setState({
         /////Imageview.js/////
@@ -81,43 +69,39 @@ class App extends Component {
       const pokeReqSpecies = new XMLHttpRequest();
       pokeReqSpecies.open('GET', pokeData.species.url);//adress för mer data
       pokeReqSpecies.addEventListener('load', () => {
-        const pokeDataSpec = JSON.parse(pokeReqSpecies.responseText);
-        //console.log(pokeDataSpec)
-        if(pokeDataSpec.evolves_from_species == null) {//om pokemon:en inte evolvar från någon annan pokemon, visa none
-          this.setState({
-            statsEvoFrom: 'None'
-          })
-        } else {
-          this.setState({
-            statsEvoFrom: pokeDataSpec.evolves_from_species.name//evolvade från denna pokemon
-          })
+
+        for(let i = 0; i < boxCover.length; i++) {
+          boxCover[i].style.display = 'none';//gömmer loading divs
+          loadText[i].style.color = 'black';
         }
+
+        const pokeDataSpec = JSON.parse(pokeReqSpecies.responseText);//pokemon data
+
+        //om pokemon inte utvecklas från någon annan pokemon
+        pokeDataSpec.evolves_from_species === null ? this.setState({statsEvoFrom:'None'}) : this.setState({statsEvoFrom:pokeDataSpec.evolves_from_species.name});
+        //habitat saknas för vissa pokemon
+        pokeDataSpec.habitat === null ? this.setState({statsHabitat:'Unknown'}) : this.setState({statsHabitat:pokeDataSpec.habitat.name});
+
         this.setState({
-          statsHabitat: pokeDataSpec.habitat.name,//habitat = tex grasslands
           statsDescription: pokeDataSpec.flavor_text_entries[1].flavor_text//pokemon beskriving
         })
+
       })//addEventListener('load')
       pokeReqSpecies.send()
-
     });//load
     pokeReq.send();
-
   }//addPokemon funktion
 
   render() {
     return (
       <div className="App">
-        <button onClick={this.appState.bind(this)}>AppState</button>
-        <h2>Pokedex</h2>
-        <br/>
-        <div className="display">
-          <div className="viewBackground">
-            <Imageview pokemonImage={this.state}/>
-            <Statsview pokemonStats={this.state}/>
-          </div>
+        <div className="appTitle">
+          <h1>Pokedex</h1>
         </div>
-        <br/>
+        <Imageview pokemonImage={this.state}/>
+        <Statsview pokemonStats={this.state}/>
         <Search addPokemon={this.addPokemon.bind(this)}/>
+        <h4 className="apiSite">Pokemon API: <a href="https://pokeapi.co/">https://pokeapi.co/</a></h4>
       </div>
     );
   }

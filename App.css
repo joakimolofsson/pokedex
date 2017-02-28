@@ -1,28 +1,29 @@
 .App {
-  background: #e63900;
-  padding: 20px 10px;
+  background: #b84747;
   width: 650px;
-  margin: 0 auto;
-  border-top: 15px solid #ff7b51;
-  border-left: 15px solid #b33208;
-  border-right: 15px solid #b33208;
-  border-bottom: 15px solid darkred;
-  border-radius: 20px;
+  height: 570px;
+  margin: 20px auto;
+  position: relative;
+  outline: 7px solid #7a0000;
 }
 
-.display {
-  display: flex;
-  justify-content: center;
+.App .appTitle {
+  background: #d26a6a;
+  height: 55px;
 }
 
-.viewBackground {
-  display: flex;
-  justify-content: center;
-  background: darkgrey;
-  padding: 15px;
-  border-top: 5px solid darkred;
-  border-left: 5px solid #b33208;
-  border-right: 5px solid #b33208;
-  border-bottom: 5px solid #ff7b51;
-  border-radius: 10px;
+.App .appTitle h1 {
+  text-align: center;
+  color: white;
+  padding: 10px 0 0 150px;
+}
+
+.App .appBtn {
+  float: right;
+}
+
+.App .apiSite {
+  position: absolute;
+  bottom: 10px;
+  left: 42%;
 }

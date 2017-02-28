@@ -1,8 +1,29 @@
-.Search ul {
-  list-style: none;
+.Search {
+  background: #c85b5b;
+  width: 150px;
+  height: 570px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.Search .searchInput {
-  width: 300px;
-  font-size: 18px;
+.Search ul {
+  height: 540px;
+  list-style: none;
+  overflow-y: scroll;
+}
+
+.Search input[type=text] {
+  width: 150px;
+  height: 30px;
+  text-align: center;
+  border: none;
+}
+
+.Search ul li {
+  padding: 1px 0 1px 5px;
+  cursor: pointer;
+}
+.Search ul li:hover {
+  background: white;
 }
