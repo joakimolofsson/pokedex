@@ -15,15 +15,12 @@ class Search extends Component {
     const loadDiv = document.querySelector('.loadDiv');
 
     const pokeReq = new XMLHttpRequest();
-    pokeReq.open('GET', 'http://pokeapi.co/api/v2/pokemon/?limit=811');//adress
+    pokeReq.open('GET', 'https://pokeapi.co/api/v2/pokemon/?limit=811');//adress
     pokeReq.addEventListener('loadstart', () => {//laddnings text
-      loadDiv.style.opacity = 1;//loadDiv visas
+      loadDiv.style.display = 'flex';//loadDiv visas
     });
     pokeReq.addEventListener('load', () => {
-      loadDiv.style.opacity = 0;//loadDiv tas bort. animation i css
-      setTimeout(() => {
-        loadDiv.style.display = "none";//loadDiv tas bort "på riktigt"
-      },5500);//den här tiden kan kanske ändras...
+      loadDiv.style.display = "none";
       const pokeData = JSON.parse(pokeReq.responseText);//från string till json
       //console.log(pokeData)//kolla data
       this.setState({
