@@ -2,7 +2,7 @@
   background: #b84747;
   width: 650px;
   height: 570px;
-  margin: 20px auto;
+  margin: 50px auto;
   position: relative;
   outline: 7px solid #7a0000;
 }
@@ -26,4 +26,9 @@
   position: absolute;
   bottom: 10px;
   left: 42%;
+  color: white;
+}
+
+.App .apiSite a {
+  color: white;
 }

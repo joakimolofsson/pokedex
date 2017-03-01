@@ -13,6 +13,18 @@
   overflow-y: scroll;
 }
 
+.Search ::-webkit-scrollbar {
+  width: 12px;  /* for vertical scrollbars */
+}
+
+.Search ::-webkit-scrollbar-track {
+  background: #a02626;
+}
+
+.Search ::-webkit-scrollbar-thumb {
+  background: #f1bfbf;
+}
+
 .Search input[type=text] {
   width: 150px;
   height: 30px;
@@ -26,4 +38,34 @@
 }
 .Search ul li:hover {
   background: white;
+}
+
+.Search .loadDiv {
+  position: absolute;
+  width: 650px;
+  height: 570px;
+  background: #c85b5b;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 1;
+  transition: 1s all;
+}
+
+.Search .loadDiv h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.Search .loadDiv p {
+  color: white;
+  text-align: center;
+}
+
+.Search .loadDiv a {
+  color: white;
+  text-align: center;
 }

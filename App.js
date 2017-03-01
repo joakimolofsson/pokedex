@@ -25,15 +25,13 @@ class App extends Component {
   }
 
   addPokemon(pokemonUrl, pokemonName) {//data från Search.js
-    const boxCover = document.querySelectorAll('.boxCover'),//loading divs
-          loadText = document.querySelectorAll('.boxCover h3');//loading divs text
+    const boxCover = document.querySelectorAll('.boxCover');//loading divs
 
     const pokeReq = new XMLHttpRequest();
     pokeReq.open('GET', pokemonUrl);//adress till vald pokemon
     pokeReq.addEventListener('loadstart', () => {//loading func
       for(let i = 0; i < boxCover.length; i++) {
         boxCover[i].style.display = 'flex';//visar loading divs
-        loadText[i].style.color = 'black';
       }
     });//loadstart
     pokeReq.addEventListener('load', () => {
@@ -72,7 +70,6 @@ class App extends Component {
 
         for(let i = 0; i < boxCover.length; i++) {
           boxCover[i].style.display = 'none';//gömmer loading divs
-          loadText[i].style.color = 'black';
         }
 
         const pokeDataSpec = JSON.parse(pokeReqSpecies.responseText);//pokemon data
@@ -101,7 +98,7 @@ class App extends Component {
         <Imageview pokemonImage={this.state}/>
         <Statsview pokemonStats={this.state}/>
         <Search addPokemon={this.addPokemon.bind(this)}/>
-        <h4 className="apiSite">Pokemon API: <a href="https://pokeapi.co/">https://pokeapi.co/</a></h4>
+        <p className="apiSite">Pokemon API: <a href="https://pokeapi.co/">https://pokeapi.co/</a></p>
       </div>
     );
   }

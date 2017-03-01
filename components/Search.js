@@ -11,32 +11,36 @@ class Search extends Component {
     }
   }
 
-  componentWillMount() {
-      const pokeReq = new XMLHttpRequest();
-      pokeReq.open('GET', 'http://pokeapi.co/api/v2/pokemon/?limit=811');//adress
-      pokeReq.addEventListener('loadstart', () => {//laddnings text
+  componentDidMount() {//willMount kanske är bättre, men då fungerar inte loadDiv
+    const loadDiv = document.querySelector('.loadDiv');
+
+    const pokeReq = new XMLHttpRequest();
+    pokeReq.open('GET', 'http://pokeapi.co/api/v2/pokemon/?limit=811');//adress
+    pokeReq.addEventListener('loadstart', () => {//laddnings text
+      loadDiv.style.opacity = 1;//loadDiv visas
+    });
+    pokeReq.addEventListener('load', () => {
+      loadDiv.style.opacity = 0;//loadDiv tas bort. animation i css
+      setTimeout(() => {
+        loadDiv.style.display = "none";//loadDiv tas bort "på riktigt"
+      },5500);//den här tiden kan kanske ändras...
+      const pokeData = JSON.parse(pokeReq.responseText);//från string till json
+      //console.log(pokeData)//kolla data
+      this.setState({
+        loadingPlaceHolder: 'Pokemon Search'
+      })
+      for(let i = 0; i < 811; i++) {
         this.setState({
-          loadingPlaceHolder: 'Loading Please Wait'
-        })
-      });
-      pokeReq.addEventListener('load', () => {
-        const pokeData = JSON.parse(pokeReq.responseText);//från string till json
-        //console.log(pokeData)//kolla data
-        this.setState({
-          loadingPlaceHolder: 'Pokemon Search'
-        })
-        for(let i = 0; i < 811; i++) {
-          this.setState({
-            pokemons: this.state.pokemons.concat(//pushar namn och nummer till pokemons[]
-              {
-                name: pokeData.results[i].name,//namn på pokemon
-                url: pokeData.results[i].url//api adress till pokemon för att få ut mer data
-              }
-            )
-          });
-        }
-      });//load
-      pokeReq.send();
+          pokemons: this.state.pokemons.concat(//pushar namn och nummer till pokemons[]
+            {
+              name: pokeData.results[i].name,//namn på pokemon
+              url: pokeData.results[i].url//api adress till pokemon för att få ut mer data
+            }
+          )
+        });
+      }
+    });//load
+    pokeReq.send();
   }//componentWillMount
 
   filterPokemon(e) {//filter pokemon funktion
@@ -65,6 +69,11 @@ class Search extends Component {
   render() {
     return (
       <div className="Search">
+        <div className="loadDiv">
+          <h2>Catching 811 Pokemons</h2>
+          <h2>Please wait</h2>
+          <p>Pokemon API: <a href="https://pokeapi.co/">https://pokeapi.co/</a></p>
+        </div>
         <input type="text" placeholder={this.state.loadingPlaceHolder} onChange={this.filterPokemon.bind(this)}/>
         <ul>
           {this.state.pokemons.map((pokemon, index) => {
